@@ -76,24 +76,55 @@ view: order_items {
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
+  measure: num_dist_users {
+    type: count_distinct
+    label: "No. unique purchasing customers"
+    sql: ${user_id} ;;
+  }
   measure: count {
     type: count
     drill_fields: [detail*]
   }
 
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+  measure: num_dist_orders {
+    type: count_distinct
+    sql:  ${order_id} ;;
+
+  }
+  measure: average_items_per_order {
+    value_format_name: decimal_1
+    type: number
+    sql: count(${product_id})/count(distinct ${order_id}) ;;
+
+  }
+  measure: average_order_value {
+    type:  number
+    sql: ${total_sale_price}/${num_dist_orders} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: average_frequency_rate {
+   type: number
+   sql:${num_dist_orders}/ ${num_dist_users} ;;
+ }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	users.last_name,
-	users.id,
-	users.first_name,
-	inventory_items.id,
-	inventory_items.product_name,
-	products.name,
-	products.id,
-	orders.order_id
-	]
+  id,
+  users.last_name,
+  users.id,
+  users.first_name,
+  inventory_items.id,
+  inventory_items.product_name,
+  products.name,
+  products.id,
+  orders.order_id
+  ]
   }
 
 }

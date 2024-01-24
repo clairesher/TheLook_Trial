@@ -21,6 +21,12 @@ view: users {
     type: number
     sql: ${TABLE}.age ;;
   }
+  dimension: age_group {
+    type: tier
+    tiers: [0, 15, 25, 35, 50, 65]
+    style: integer
+    sql: ${age} ;;
+  }
 
   dimension: city {
     type: string
@@ -40,6 +46,20 @@ view: users {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_at ;;
   }
+  # dimension: is_new_user{
+    # type: yesno
+ #    sql: ${TABLE}.created_at>= datediff(now, 90, days)  ;;
+   #}
+
+ #  measure: days_since_last_order {
+ #    type: number
+ #    sql:date_diff(now,  max(${order_items.created_date}), DAY);;
+ #  }
+
+ #  dimension: is_active_user{
+  #   type: yesno
+ #    sql:max(${order_items.created_date}) >=  date_sub(current_date(), INTERVAL 90 DAY) ;;
+ #  }
 
   dimension: email {
     type: string
@@ -98,13 +118,13 @@ view: users {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	last_name,
-	first_name,
-	events.count,
-	orders.count,
-	order_items.count
-	]
+  id,
+  last_name,
+  first_name,
+  events.count,
+  orders.count,
+  order_items.count
+  ]
   }
 
 }

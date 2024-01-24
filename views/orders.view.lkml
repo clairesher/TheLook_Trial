@@ -40,7 +40,11 @@ view: orders {
     type: number
     sql: ${TABLE}.num_of_item ;;
   }
+  measure: avg_items {
+    type: average
+    sql: ${num_of_item} ;;
 
+  }
   dimension_group: returned {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
