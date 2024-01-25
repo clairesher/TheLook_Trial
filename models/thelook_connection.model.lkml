@@ -29,6 +29,7 @@ explore: order_items {
     relationship: many_to_one
   }
   join: customer_aggregates {
+    view_label: "Users"
     relationship: one_to_one
     sql_on:  ${users.id} = ${customer_aggregates.user_id} ;;
   }
@@ -49,6 +50,11 @@ explore: order_items {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.order_id} ;;
     relationship: many_to_one
+  }
+  join: order_aggregates {
+    type: inner
+    relationship: one_to_one
+    sql_on:  ${orders.order_id} = ${order_aggregates.order_id} ;;
   }
 
   join: distribution_centers {
