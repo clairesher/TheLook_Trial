@@ -133,7 +133,7 @@ view: customer_aggregates {
   dimension: is_active_customer {
     label: "Active customer flag"
     type: yesno
-    sql:  days_since_last_order < 90;;
+    sql:   ${TABLE}.days_since_last_order < 90;;
   }
 
   dimension: days_since_signup {

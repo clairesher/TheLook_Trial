@@ -22,6 +22,16 @@ persist_with: thelook_connection_default_datagroup
 
 
 
+# Use case for predicting dormant customers
+explore: users {
+  label: "predicting_dormant_customers"
+  join: dormant_predictions2 {
+    type: inner
+    relationship: one_to_one
+    sql_on: ${users.id} = ${dormant_predictions2.pred_id} ;;
+  }
+}
+
 explore: order_items {
   join: users {
     type: left_outer
@@ -32,6 +42,12 @@ explore: order_items {
     view_label: "Users"
     relationship: one_to_one
     sql_on:  ${users.id} = ${customer_aggregates.user_id} ;;
+  }
+  join: dormant_predictions2 {
+    view_label: "Users"
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${customer_aggregates.user_id} = ${dormant_predictions2.pred_id} ;;
   }
 
   join: inventory_items {
