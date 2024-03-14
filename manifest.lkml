@@ -8,6 +8,7 @@ project_name: "thelook_connection"
 # }
 application: explore_assistant_cloudfunc {
   label: "Cloud function deployment of luka github for explore assistant"
+  url: "https://localhost:8080/bundle.js"
   entitlements: {
     core_api_methods: ["lookml_model_explore", "run_inline_query"]
     navigation: yes
